@@ -23,8 +23,10 @@ public class Player {
     @GeneratedValue
     private UUID id;
     private String name;
+    private String nationality;
+    private String position;
     private int shirtNumber;
     private int overallRate;
-    private int velocity;
+    private int attack;
     private int defence;
 }
