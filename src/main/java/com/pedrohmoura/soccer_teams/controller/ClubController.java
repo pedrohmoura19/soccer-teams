@@ -1,7 +1,10 @@
 package com.pedrohmoura.soccer_teams.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pedrohmoura.soccer_teams.domain.Club.Club;
 import com.pedrohmoura.soccer_teams.domain.Club.ClubRequestDTO;
+import com.pedrohmoura.soccer_teams.domain.Club.ClubResponseDTO;
 import com.pedrohmoura.soccer_teams.services.ClubService;
 
 @RestController
@@ -23,4 +27,16 @@ public class ClubController {
         Club club = clubService.createClub(body);   
         return ResponseEntity.ok(club);
     }
+
+    @GetMapping()
+    public ResponseEntity<List<ClubResponseDTO>> getAll() {
+        List<ClubResponseDTO> clubs = clubService.getAllClubs();
+        return ResponseEntity.ok(clubs);
+    }
+    
+    // @DeleteMapping()
+    // public ResponseEntity<Void> delete(@RequestBody ClubRequestDTO body) {
+    //     clubService.deleteClub(body);
+    //     return ResponseEntity.noContent().build();
+    // }
 }
