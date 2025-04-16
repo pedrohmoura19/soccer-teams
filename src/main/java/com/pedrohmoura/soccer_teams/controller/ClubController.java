@@ -1,10 +1,12 @@
 package com.pedrohmoura.soccer_teams.controller;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,11 +34,17 @@ public class ClubController {
     public ResponseEntity<List<ClubResponseDTO>> getAll() {
         List<ClubResponseDTO> clubs = clubService.getAllClubs();
         return ResponseEntity.ok(clubs);
+    } 
+
+    @PostMapping("/{id}")
+    public ResponseEntity<Club> update(@RequestBody ClubRequestDTO body, @PathVariable UUID id) {
+        Club updatedClub = clubService.updateClub(id, body);
+        return ResponseEntity.ok(updatedClub);
     }
     
-    // @DeleteMapping()
-    // public ResponseEntity<Void> delete(@RequestBody ClubRequestDTO body) {
-    //     clubService.deleteClub(body);
+    // @DeleteMapping("/{id}")
+    // public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    //     clubService.deleteClub(id);
     //     return ResponseEntity.noContent().build();
     // }
 }

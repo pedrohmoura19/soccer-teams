@@ -1,6 +1,7 @@
 package com.pedrohmoura.soccer_teams.services;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,8 +42,23 @@ public class ClubService {
                 .toList();
     }
 
-    // public void deleteClub(ClubRequestDTO body) {
-    //     Club club = clubRepository.findById(body.id()).orElseThrow(() -> new RuntimeException("Club not found"));
-    //     clubRepository.delete(club);
-    // }
+    public Club updateClub(UUID id, ClubRequestDTO body) {
+        Club club = clubRepository.findById(id).orElseThrow(() -> new RuntimeException("Club not found"));
+        club.setName(body.name());
+        club.setCountry(body.country());
+        club.setCity(body.city());
+        club.setStadium(body.stadium());
+        club.setManager(body.manager());
+        club.setKitColor(body.kitColor());
+        return clubRepository.save(club);
+    }
+    
+    public Club getClubById(UUID id) {
+        return clubRepository.findById(id).orElseThrow(() -> new RuntimeException("Club not found"));
+    }
+
+    public void deleteClub(UUID id) {
+        Club club = clubRepository.findById(id).orElseThrow(() -> new RuntimeException("Club not found"));
+        clubRepository.delete(club);
+    }
 }
