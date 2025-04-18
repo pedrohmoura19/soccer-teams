@@ -1,6 +1,7 @@
 package com.pedrohmoura.soccer_teams.services;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +41,38 @@ public class PlayerService {
         return player;
     }
 
+    public PlayerResponseDTO getPlayerById(UUID id) {
+        Player player = playerRepository.findById(id).orElseThrow(() -> new RuntimeException("Player not found"));
+        return new PlayerResponseDTO(
+                player.getId(),
+                player.getName(),
+                player.getNationality(),
+                player.getPosition(),
+                player.getShirtNumber(),
+                player.getOverallRate(),
+                player.getAttack(),
+                player.getDefence(),
+                player.getClub().getId());
+    }
+
     public List<PlayerResponseDTO> getAllPlayers() {
         List<Player> players = playerRepository.findAll();
+        return players.stream()
+                .map(player -> new PlayerResponseDTO(
+                        player.getId(),
+                        player.getName(),
+                        player.getNationality(),
+                        player.getPosition(),
+                        player.getShirtNumber(),
+                        player.getOverallRate(),
+                        player.getAttack(),
+                        player.getDefence(),
+                        player.getClub().getId()))
+                .collect(Collectors.toList());
+    }
+
+    public List<PlayerResponseDTO> getPlayersByClubId(UUID clubId) {
+        List<Player> players = playerRepository.findByClubId(clubId);
         return players.stream()
                 .map(player -> new PlayerResponseDTO(
                         player.getId(),
