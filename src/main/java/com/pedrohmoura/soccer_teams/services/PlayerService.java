@@ -16,6 +16,13 @@ public class PlayerService {
 
     @Autowired
     private PlayerRepository playerRepository;
+
+    private ClubService clubService;
+
+    @Autowired
+    public void ClubService(ClubService clubService) {
+        this.clubService = clubService;
+    }
     
     public Player createPlayer(PlayerRequestDTO data) {
         Player player = new Player();
@@ -26,6 +33,7 @@ public class PlayerService {
         player.setOverallRate(data.overallRate());
         player.setAttack(data.attack());
         player.setDefence(data.defence());
+        player.setClub(clubService.getClubById(data.clubId()));
 
         playerRepository.save(player);
         
@@ -43,7 +51,8 @@ public class PlayerService {
                         player.getShirtNumber(),
                         player.getOverallRate(),
                         player.getAttack(),
-                        player.getDefence()))
+                        player.getDefence(),
+                        player.getClub().getId()))
                 .collect(Collectors.toList());
     }
 }

@@ -10,6 +10,6 @@ String position,
 int shirtNumber,
 int overallRate,
 int attack,
-int defence) {
-    
-}
+int defence,
+UUID clubId
+) {}
